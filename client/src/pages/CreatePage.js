@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {AuthContext} from '../context/AuthContext';
 import {useNavigate} from 'react-router-dom';
@@ -15,14 +15,11 @@ export const CreatePage = () => {
 
     const pressHandler = async (event) => {
         if(event.key === 'Enter') {
-            console.log('auth.token', auth.token);
-            
             try {
                 const data = await request('/api/link/generate', 'POST', {from: link}, {
                     Authorization: `Bearer ${auth.token}`,
                 });
-                console.log(data);
-                navigate(`/detail/${data.link._id}`)
+                navigate(`/detail/${data.link._id}`, {replace: true});
             } catch(e) {}
         }
     };
@@ -35,7 +32,6 @@ export const CreatePage = () => {
                         placeholder="Вставьте ссылку"
                         id="link"
                         type="text"
-                        name="email"
                         value={link}
                         onChange={e => setLink(e.target.value)}
                         onKeyPress={pressHandler}

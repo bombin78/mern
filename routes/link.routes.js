@@ -8,7 +8,7 @@ const router = Router();
 router.post('/generate', auth, async (req, res) => {
     try {
         const baseUrl = config.get('baseUrl');
-        const {from} = req.body();
+        const {from} = req.body;
         const code = shortid.generate();
         const existing = await Link.findOne({from});
 
@@ -46,7 +46,7 @@ router.get('/:id', auth, async (req, res) => {
         res.json(link);
     } catch (e) {
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
-    }j
+    }
 });
 
 
